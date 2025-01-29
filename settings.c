@@ -290,10 +290,11 @@ void SETTINGS_InitEEPROM(void)
     gSetting_500TX             = (Data[4] < 2) ? Data[4] : false;
 #endif
     gSetting_350EN             = (Data[5] < 2) ? Data[5] : true;
-#ifdef ENABLE_FEAT_F4HWN
+#if 0 // Enable scramble. Was: #ifdef ENABLE_FEAT_F4HWN
     gSetting_ScrambleEnable    = false;
 #else
-    gSetting_ScrambleEnable    = (Data[6] < 2) ? Data[6] : true;
+    // Was : gSetting_ScrambleEnable    = (Data[6] < 2) ? Data[6] : true;
+    gSetting_ScrambleEnable    = true;
 #endif
 
     //gSetting_TX_EN             = (Data[7] & (1u << 0)) ? true : false;
@@ -742,7 +743,7 @@ void SETTINGS_SaveSettings(void)
     State[4]  = gSetting_500TX;
 #endif
     State[5]  = gSetting_350EN;
-#ifdef ENABLE_FEAT_F4HWN
+#if 0 // Enable scrmable. Was: #ifdef ENABLE_FEAT_F4HWN
     State[6]  = false;
 #else
     State[6]  = gSetting_ScrambleEnable;
@@ -853,7 +854,7 @@ void SETTINGS_SaveChannel(uint8_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, 
 #endif
         ;
         State._8[6] =  pVFO->STEP_SETTING;
-#ifdef ENABLE_FEAT_F4HWN
+#if 0 // Enable scramble. Was: #ifdef ENABLE_FEAT_F4HWN
         State._8[7] =  0;
 #else
         State._8[7] =  pVFO->SCRAMBLING_TYPE;
