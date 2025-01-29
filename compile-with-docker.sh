@@ -68,7 +68,6 @@ voxless() {
         TARGET=f4hwn.voxless \
         && cp f4hwn.voxless* compiled-firmware/"
 }
-
 rescueops() {
     echo "RescueOps compilation..."
     docker run --rm -v "${PWD}/compiled-firmware:/app/compiled-firmware" $IMAGE_NAME /bin/bash -c "cd /app && make -s \
@@ -78,6 +77,20 @@ rescueops() {
         ENABLE_NOAA=1 \
         ENABLE_FEAT_F4HWN_RESCUE_OPS=1 \
         EDITION_STRING=RescueOps \
+        TARGET=f4hwn.rescueops \
+        && cp f4hwn.rescueops* compiled-firmware/"
+}
+
+rescueops_scrambler() {
+    echo "RescueOps + Scrambler compilation..."
+    docker run --rm -v "${PWD}/compiled-firmware:/app/compiled-firmware" $IMAGE_NAME /bin/bash -c "cd /app && make -s \
+        ENABLE_SPECTRUM=0 \
+        ENABLE_FMRADIO=0 \
+        ENABLE_AIRCOPY=1 \
+        ENABLE_NOAA=1 \
+        ENABLE_FEAT_F4HWN_RESCUE_OPS=1 \
+        ENABLE_SCRAMBLER=1 \
+        EDITION_STRING=RescueScr \
         TARGET=f4hwn.rescueops \
         && cp f4hwn.rescueops* compiled-firmware/"
 }
@@ -101,13 +114,17 @@ case "$1" in
     rescueops)
         rescueops
         ;;
+    rescueops_scrambler)
+        rescueops_scrambler
+        ;;
     all)
         bandscope
         broadcast
         rescueops
+        rescueops_scrambler
         ;;
     *)
-        echo "Usage: $0 {custom|bandscope|broadcast|voxless|standard|all}"
+        echo "Usage: $0 {custom|bandscope|broadcast|voxless|standard|rescueops|rescueops_scrambler|all}"
         exit 1
         ;;
 esac

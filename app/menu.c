@@ -253,7 +253,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
         case MENU_500TX:
 #endif
         case MENU_350EN:
-#if 1 // Enable Scramble. Was: #ifndef ENABLE_FEAT_F4HWN
+#ifdef ENABLE_SCRAMBLER // Enable Scramble. Was: #ifndef ENABLE_FEAT_F4HWN
         case MENU_SCREN:
 #endif
 #ifdef ENABLE_FEAT_F4HWN
@@ -267,7 +267,7 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
             *pMax = ARRAY_SIZE(gModulationStr) - 1;
             break;
 
-#if 1 // Enable scrambler. Was: #ifndef ENABLE_FEAT_F4HWN
+#ifdef ENABLE_SCRAMBLER // Enable scrambler. Was: #ifndef ENABLE_FEAT_F4HWN
         case MENU_SCR:
             //*pMin = 0;
             *pMax = ARRAY_SIZE(gSubMenu_SCRAMBLER) - 1;
@@ -542,10 +542,10 @@ void MENU_AcceptSetting(void)
             gRequestSaveChannel       = 1;
             return;
 
-#if 1 // Enable scrambler. Was: #ifndef ENABLE_FEAT_F4HWN
+#ifdef ENABLE_SCRAMBLER // Enable scrambler. Was: #ifndef ENABLE_FEAT_F4HWN
         case MENU_SCR:
             gTxVfo->SCRAMBLING_TYPE = gSubMenuSelection;
-#if 1 // Enable scrambler. Was: #if 0
+            #if 1 // Enable scrambler. Was: #if 0
                 if (gSubMenuSelection > 0 && gSetting_ScrambleEnable)
                     BK4819_EnableScramble(gSubMenuSelection - 1);
                 else
@@ -862,7 +862,7 @@ void MENU_AcceptSetting(void)
             gVfoConfigureMode    = VFO_CONFIGURE_RELOAD;
             gFlagResetVfos       = true;
             break;
-#if 1 // Enable Scramble. Was: #ifndef ENABLE_FEAT_F4HWN
+#ifdef ENABLE_SCRAMBLER // Enable Scramble. Was: #ifndef ENABLE_FEAT_F4HWN
         case MENU_SCREN:
             gSetting_ScrambleEnable = gSubMenuSelection;
             gFlagReconfigureVfos    = true;
@@ -1073,7 +1073,7 @@ void MENU_ShowCurrentSetting(void)
             gSubMenuSelection = gTxVfo->CHANNEL_BANDWIDTH;
             break;
 
-#if 1 // Enable srcambler. Was: #ifndef ENABLE_FEAT_F4HWN
+#ifdef ENABLE_SCRAMBLER // Enable srcambler. Was: #ifndef ENABLE_FEAT_F4HWN
         case MENU_SCR:
             gSubMenuSelection = gTxVfo->SCRAMBLING_TYPE;
             break;
@@ -1318,7 +1318,7 @@ void MENU_ShowCurrentSetting(void)
             gSubMenuSelection = gSetting_350EN;
             break;
 
-#if 1 // Enable scramble. Was: #ifndef ENABLE_FEAT_F4HWN
+#ifdef ENABLE_SCRAMBLER // Enable scramble. Was: #ifndef ENABLE_FEAT_F4HWN
         case MENU_SCREN:
             gSubMenuSelection = gSetting_ScrambleEnable;
             break;
